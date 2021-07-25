@@ -33,6 +33,15 @@
     "bsapp-e2e": {
       "tags": [],
       "implicitDependencies": ["bsapp"]
+    },
+    "data-access-home": {
+      "tags": []
+    },
+    "models": {
+      "tags": []
+    },
+    "shared-ui": {
+      "tags": []
     }
   }
 }

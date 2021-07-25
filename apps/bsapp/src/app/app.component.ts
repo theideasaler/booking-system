@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'booking-system-root',
+  selector: 'bs-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

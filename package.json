@@ -37,7 +37,11 @@
     "@angular/platform-browser": "^12.1.0",
     "@angular/platform-browser-dynamic": "^12.1.0",
     "@angular/router": "^12.1.0",
+    "@ngxs/logger-plugin": "^3.7.2",
+    "@ngxs/schematics": "0.0.1-alpha.5",
+    "@ngxs/store": "^3.7.2",
     "@nrwl/angular": "12.6.2",
+    "include-media": "^1.4.10",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"

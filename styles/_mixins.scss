@@ -1,0 +1,18 @@
+@mixin hover-cursor-pointer {
+  &:hover,
+  &:focus,
+  &:active {
+    cursor: pointer;
+  }
+}
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-center-column {
+    @include flex-center;
+    flex-direction: column;
+}

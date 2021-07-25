@@ -14,7 +14,13 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@booking-system/data-access-home": [
+        "libs/data-access-home/src/index.ts"
+      ],
+      "@booking-system/models": ["libs/models/src/index.ts"],
+      "@booking-system/shared-ui": ["libs/shared-ui/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

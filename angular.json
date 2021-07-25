@@ -5,7 +5,7 @@
       "projectType": "application",
       "root": "apps/bsapp",
       "sourceRoot": "apps/bsapp/src",
-      "prefix": "booking-system",
+      "prefix": "bs",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -19,7 +19,10 @@
             "inlineStyleLanguage": "scss",
             "assets": ["apps/bsapp/src/favicon.ico", "apps/bsapp/src/assets"],
             "styles": ["apps/bsapp/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["styles"]
+            }
           },
           "configurations": {
             "production": {
@@ -113,6 +116,81 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/bsapp-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "data-access-home": {
+      "projectType": "library",
+      "root": "libs/data-access-home",
+      "sourceRoot": "libs/data-access-home/src",
+      "prefix": "bs",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/data-access-home"],
+          "options": {
+            "jestConfig": "libs/data-access-home/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/data-access-home/src/**/*.ts",
+              "libs/data-access-home/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "models": {
+      "projectType": "library",
+      "root": "libs/models",
+      "sourceRoot": "libs/models/src",
+      "prefix": "bs",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/models"],
+          "options": {
+            "jestConfig": "libs/models/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/models/src/**/*.ts",
+              "libs/models/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-ui": {
+      "projectType": "library",
+      "root": "libs/shared-ui",
+      "sourceRoot": "libs/shared-ui/src",
+      "prefix": "bs",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared-ui"],
+          "options": {
+            "jestConfig": "libs/shared-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared-ui/src/**/*.ts",
+              "libs/shared-ui/src/**/*.html"
+            ]
           }
         }
       }
