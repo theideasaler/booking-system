@@ -1,8 +1,10 @@
-import { FEATURES } from '@booking-system/models';
+import { Features, SearchTypes } from '@booking-system/models';
 
-const key = FEATURES.HOME;
+const key = Features.home;
 
-export class DataAccessHomeAction {
-  public static readonly type = `[${key}] Add item`;
-  constructor(public payload: string) { }
+export namespace DataAccessHomeAction {
+  export class Search {
+    public static readonly type = `[${key}] Search`;
+    constructor(public type: SearchTypes) {}
+  }
 }

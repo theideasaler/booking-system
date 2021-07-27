@@ -4,19 +4,45 @@
 html {
   --root-font-size: #{$root-font-size};
   font-size: var(--root-font-size);
-}
-
-html,
-body {
-  height: 100%;
+  display: flex;
+  min-height: 100vh;
 }
 
 body {
+  display: flex;
+  flex: 1;
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   background-color: $bg-color;
 }
 
+.flex-row {
+  @include flex-row;
+}
+
 .flex-center {
   @include flex-center-column;
+}
+
+.d-none {
+    display: none;
+}
+
+.d-none-sm {
+    @include media("<phone") {
+        display: none;
+    }
+}
+
+.d-sm {
+    @include media(">=phone") {
+        display: none;
+    }
+    @include media("<phone") {
+        display: block;
+    }
+}
+
+.p-absolute {
+    position: absolute;
 }

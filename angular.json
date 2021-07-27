@@ -18,7 +18,10 @@
             "tsConfig": "apps/bsapp/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["apps/bsapp/src/favicon.ico", "apps/bsapp/src/assets"],
-            "styles": ["apps/bsapp/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "apps/bsapp/src/styles.scss"
+            ],
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": ["styles"]
@@ -190,6 +193,31 @@
             "lintFilePatterns": [
               "libs/shared-ui/src/**/*.ts",
               "libs/shared-ui/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "utils": {
+      "projectType": "library",
+      "root": "libs/utils",
+      "sourceRoot": "libs/utils/src",
+      "prefix": "booking-system",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/utils"],
+          "options": {
+            "jestConfig": "libs/utils/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/utils/src/**/*.ts",
+              "libs/utils/src/**/*.html"
             ]
           }
         }

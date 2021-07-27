@@ -19,7 +19,8 @@
         "libs/data-access-home/src/index.ts"
       ],
       "@booking-system/models": ["libs/models/src/index.ts"],
-      "@booking-system/shared-ui": ["libs/shared-ui/src/index.ts"]
+      "@booking-system/shared-ui": ["libs/shared-ui/src/index.ts"],
+      "@booking-system/utils": ["libs/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

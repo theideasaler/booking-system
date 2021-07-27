@@ -1,0 +1,8 @@
+<div class="tab-container" [hidden]="!active">
+    <div class="tab-heading">
+        <ng-content select="[tab-heading]"></ng-content>
+    </div>
+    <div class="tab-body">
+        <ng-content select="[tab-body]"></ng-content>
+    </div>
+</div>

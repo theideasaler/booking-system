@@ -6,15 +6,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { SharedUiModule } from '@booking-system/shared-ui';
 import { DataAccessHomeModule } from '@booking-system/data-access-home';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     NgxsModule.forRoot([], {}),
     NgxsLoggerPluginModule.forRoot(),
     SharedUiModule,
-    DataAccessHomeModule
+    DataAccessHomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

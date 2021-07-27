@@ -1,1 +1,34 @@
 @import 'index';
+
+:host {
+  position: relative;
+  display: flex;
+  flex: 1;
+}
+
+.navs {
+  z-index: 0;
+  width: $nav-max-width;
+  height: 100%;
+  position: absolute;
+  @include media('<phone') {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 3;
+  }
+}
+
+.nav-spacer {
+  width: 30%;
+  transition: $global-transition-time;
+  @include media('<phone') {
+    width: calc(24px + 3rem) !important;
+  }
+}
+
+.data-display {
+  flex: 1;
+  z-index: 1;
+}

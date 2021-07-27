@@ -1,0 +1,125 @@
+@import 'index';
+
+:host {
+  --height: auto;
+  --nav-bg-color: #{$nav-bg-color};
+
+  --nav-tab-text-color: #{$nav-tab-text-color};
+  --nav-tab-bg-color: #{$nav-tab-bg-color};
+  --nav-icon-color: #fff;
+  
+  --nav-content-bg-color: #{$nav-content-bg-color};
+  --nav-content-text-color: #{$nav-content-text-color};
+}
+
+.container {
+  display: flex;
+  font-size: 1.5rem;
+  height: var(--height);
+  transition: $global-transition-time;
+  .tabs,
+  .display-content {
+    flex: 1;
+  }
+}
+
+.tabs {
+  z-index: 1;
+  position: relative;
+  background-color: var(--nav-bg-color);
+  word-break: break-word;
+  max-width: $nav-max-width;
+}
+
+.display-content {
+  z-index: 0;
+  position: relative;
+  background-color: var(--nav-content-bg-color);
+  color: var(--nav-content-text-color);
+  transition: $global-transition-time;
+}
+
+.tab {
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--nav-tab-bg-color);
+  color: var(--nav-tab-text-color);
+  transition: $global-transition-time;
+
+  &:not(:last-child) {
+    margin-bottom: 0.2rem;
+  }
+  @include hover-cursor-pointer;
+  @include hover-colors(var(--nav-content-bg-color), var(--nav-tab-text-color));
+  mat-icon {
+      color: var(--nav-icon-color)
+  }
+}
+
+.tabs-fold,
+.content-fold {
+  z-index: 3;
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+  transition: $global-transition-time;
+  @include hover-cursor-pointer;
+}
+
+.tabs-fold mat-icon {
+  background: #81818152;
+  border-radius: 12px;
+}
+
+@include media('<phone') {
+  .tabs-fold {
+    display: none;
+  }
+
+  .tabs {
+    width: calc(24px + 3rem);
+    flex: none !important;
+  }
+}
+
+@include media('>=phone') {
+  .container.folded {
+    transform: translateX(calc(-30% + 24px + 3rem));
+  }
+
+  .display-content {
+    &.content-folded,
+    &.content-folded-sm {
+      transform: translateX(calc(-100% + 24px + 3rem));
+      & .content-fold {
+        left: calc(100% - 24px - 3rem);
+      }
+    }
+  }
+
+  .tabs {
+    &.box-shadow {
+      box-shadow: #3e3e3e 2px 2px 10px;
+    }
+  }
+}
+
+@include media('<phone') {
+  .display-content.content-folded-sm {
+    transform: translateX(-100%);
+  }
+}
+
+.close-content {
+  right: 0;
+  top: 0;
+  color: var(--nav-icon-color);
+  padding: 2rem;
+  mat-icon {
+    @include flex-center;
+    font-size: 3rem;
+  }
+}

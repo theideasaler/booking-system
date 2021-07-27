@@ -1,1 +1,12 @@
-<bs-side-tabs></bs-side-tabs>
+<div class="navs">
+  <bs-side-tabs [fullHeight]="true" (selectChange)="onSearch($event)" [foldable]="true" (onFold)="setSpacer($event)" relativeWidth="0.3" [options]="options">
+    <bs-side-tab *ngFor="let item of searchItems; let i = index" [item]="item" [active]="i === 0">
+      <div class="tab-heading" tab-heading>{{item.name}}</div>
+      <div tab-body>body description</div>
+    </bs-side-tab>
+  </bs-side-tabs>
+</div>
+<div class="nav-spacer" [style.width]="spacerWidth"></div>
+<div class="data-display">
+
+</div>

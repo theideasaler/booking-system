@@ -3,6 +3,19 @@ $breakpoints: ('phone': 768px,'tablet': 992px,'desktop': 1200px) !default;
 
 // color
 $bg-color: #f9f9f9;
+$nav-bg-color: #eeeeee;
+
+$nav-tab-text-color: #fff;
+$nav-tab-bg-color: #4594e5;
+
+$nav-content-text-color: #fff;
+$nav-content-bg-color: #316da5;
+
 
 // size
 $root-font-size: 10px;
+$nav-max-width: 30%;
+
+
+// time
+$global-transition-time: 300ms;
