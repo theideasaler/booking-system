@@ -19,7 +19,7 @@
               <mat-card-title>{{item.name}}</mat-card-title>
               <mat-card-subtitle>{{item.type === 'event' ? item.dates?.start?.localDate : item.type === 'venue' ? item.address?.line1 : ''}}</mat-card-subtitle>
             </mat-card-header>
-            <img mat-card-image [src]="item.images?.length ? item.images[0]?.url : ''" [alt]="item.accessibility?.info">
+            <img *ngIf="item.images?.length" mat-card-image [src]="item.images[0]?.url" [alt]="item.accessibility?.info">
             <mat-card-content>
               <p>
                 {{item.type === 'event' ? item.info ?? item.pleaseNote : item.type === 'venue' ? item.parkingDetail : '' }}
