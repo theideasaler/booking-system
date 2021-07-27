@@ -4,11 +4,30 @@ import { SideTabsComponent } from './side-tabs/side-tabs.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import { SideTabComponent } from './side-tabs/side-tab/side-tab.component';
 import { MatIconModule } from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgxMasonryModule } from 'ngx-masonry';
+import { MatCardModule } from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
-  imports: [CommonModule, MatIconModule, MatTooltipModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatTooltipModule,
+    NgxMasonryModule,
+    MatCardModule,
+    MatButtonModule
+  ],
   declarations: [SideTabsComponent, AccordionComponent, SideTabComponent],
-  exports: [SideTabsComponent, AccordionComponent, SideTabComponent, MatIconModule, MatTooltipModule],
+  exports: [
+    SideTabsComponent,
+    AccordionComponent,
+    SideTabComponent,
+    MatIconModule,
+    MatTooltipModule,
+    NgxMasonryModule,
+    MatCardModule,
+    MatButtonModule
+  ],
 })
 export class SharedUiModule {}

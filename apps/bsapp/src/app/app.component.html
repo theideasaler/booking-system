@@ -1,5 +1,6 @@
 <div class="navs">
-  <bs-side-tabs [fullHeight]="true" (selectChange)="onSearch($event)" [foldable]="true" (onFold)="setSpacer($event)" relativeWidth="0.3" [options]="options">
+  <bs-side-tabs [fullHeight]="true" (selectChange)="onSearch($event)" [foldable]="true" (onFold)="setSpacer($event)"
+    relativeWidth="0.3" [options]="options">
     <bs-side-tab *ngFor="let item of searchItems; let i = index" [item]="item" [active]="i === 0">
       <div class="tab-heading" tab-heading>{{item.name}}</div>
       <div tab-body>body description</div>
@@ -8,5 +9,28 @@
 </div>
 <div class="nav-spacer" [style.width]="spacerWidth"></div>
 <div class="data-display">
-
+  <div class="items-container" *ngIf="data$ | async as items">
+    <ngx-masonry [ordered]="true" [updateLayout]="true" [options]="masonryOptions" (itemsLoaded)="itemsLoaded()">
+      <div ngxMasonryItem class="masonry-item" *ngFor="let item of items;index as idx" style="width: 22.5%;">
+        <div class="search-item">
+          <mat-card>
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>{{item.name}}</mat-card-title>
+              <mat-card-subtitle>{{item.type === 'event' ? item.dates?.start?.localDate : item.type === 'venue' ? item.address?.line1 : ''}}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image [src]="item.images?.length ? item.images[0]?.url : ''" [alt]="item.accessibility?.info">
+            <mat-card-content>
+              <p>
+                {{item.type === 'event' ? item.info ?? item.pleaseNote : item.type === 'venue' ? item.parkingDetail : '' }}
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button (click)="goToLink(item.url)">VIEW MORE</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </ngx-masonry>
+  </div>
 </div>

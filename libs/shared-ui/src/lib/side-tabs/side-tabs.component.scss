@@ -7,7 +7,7 @@
   --nav-tab-text-color: #{$nav-tab-text-color};
   --nav-tab-bg-color: #{$nav-tab-bg-color};
   --nav-icon-color: #fff;
-  
+
   --nav-content-bg-color: #{$nav-content-bg-color};
   --nav-content-text-color: #{$nav-content-text-color};
 }
@@ -54,7 +54,7 @@
   @include hover-cursor-pointer;
   @include hover-colors(var(--nav-content-bg-color), var(--nav-tab-text-color));
   mat-icon {
-      color: var(--nav-icon-color)
+    color: var(--nav-icon-color);
   }
 }
 
@@ -119,6 +119,7 @@
   color: var(--nav-icon-color);
   padding: 2rem;
   mat-icon {
+    @include hover-cursor-pointer;
     @include flex-center;
     font-size: 3rem;
   }

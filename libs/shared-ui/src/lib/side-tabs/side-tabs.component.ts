@@ -5,6 +5,7 @@ import {
   ContentChildren,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnInit,
   Output,
@@ -27,6 +28,7 @@ export class SideTabsComponent implements OnInit, AfterContentInit {
   @Output() onFold = new EventEmitter<string>();
   @ContentChildren(SideTabComponent) tabs!: QueryList<SideTabComponent>;
 
+  private _screenWidth!: number;
   private iniialized!: boolean;
   private _noActiveTab!: boolean;
   set noActiveTab(v: boolean) {
@@ -62,6 +64,11 @@ export class SideTabsComponent implements OnInit, AfterContentInit {
     this.iniialized = true;
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this._screenWidth = event.target.innerWidth;
+  }
+
   activateTab(tab: SideTabComponent | undefined) {
     if (!tab) return;
     this.tabs.toArray().forEach((tab) => (tab.active = false));
@@ -70,18 +77,13 @@ export class SideTabsComponent implements OnInit, AfterContentInit {
     this.contentFoldedSm = false;
     this.noActiveTab = false;
     this.contentFolded = false;
+    this.folded = false;
     this._moveContent();
   }
 
   onTabsFoldChange() {
     this.folded = !this.folded;
-    if (this.folded)
-      return this.onFold.emit(
-        `${Number(this.relativeWidth) * 100 + '%'} - ${
-          Number(this.relativeWidth) * 0.3 * 100 + '%'
-        } + 24px + 3rem`
-      );
-    else return this.onFold.emit(`${Number(this.relativeWidth) * 100 + '%'}`);
+    this._moveContent();
   }
 
   onContentFoldChange() {
@@ -136,18 +138,26 @@ export class SideTabsComponent implements OnInit, AfterContentInit {
   }
 
   private _moveContent() {
-    if(!this.iniialized) return;
-    if (this.contentFolded)
-      return this.onFold.emit(
-        `${Number(this.relativeWidth) * 100 + '%'} - ${
-          Number(this.relativeWidth) * 0.3 * 100 + '%'
-        } + 24px + 3rem - 21% + 24px + 3rem`
-      );
-    else
-      return this.onFold.emit(
-        `${Number(this.relativeWidth) * 100 + '%'} - ${
-          Number(this.relativeWidth) * 0.3 * 100 + '%'
-        } + 24px + 3rem`
-      );
+    if (!this.iniialized) return;
+    if (this.contentFolded) {
+      if (this.folded)
+        return this.onFold.emit(
+          `${Number(this.relativeWidth) * 100 + '%'} - ${
+            Number(this.relativeWidth) * 0.3 * 100 + '%'
+          } + 24px + 3rem - 21% + 24px + 3rem`
+        );
+      else
+        return this.onFold.emit(
+          `${Number(this.relativeWidth) * 100 + '%'} - 21% + 24px + 3rem`
+        );
+    } else {
+      if (this.folded)
+        return this.onFold.emit(
+          `${Number(this.relativeWidth) * 100 + '%'} - ${
+            Number(this.relativeWidth) * 0.3 * 100 + '%'
+          } + 24px + 3rem`
+        );
+      else return this.onFold.emit(`${Number(this.relativeWidth) * 100 + '%'}`);
+    }
   }
 }

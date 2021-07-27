@@ -30,8 +30,8 @@ export interface SearchItem {
 
 export interface TicketmasterResultModel {
   page: any;
-  _embedded: any[];
-  links: any;
+  _embedded: { [key: string]:any[]};
+  _links: any;
 }
 
 export interface TabsOptions {

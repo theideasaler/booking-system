@@ -4,6 +4,7 @@
   position: relative;
   display: flex;
   flex: 1;
+  max-height: 100vh;
 }
 
 .navs {
@@ -11,6 +12,7 @@
   width: $nav-max-width;
   height: 100%;
   position: absolute;
+  max-height: 100vh;
   @include media('<phone') {
     position: absolute;
     width: 100%;
@@ -31,4 +33,26 @@
 .data-display {
   flex: 1;
   z-index: 1;
+  max-height: 100vh;
+  overflow-y: scroll;
+  padding: 2rem;
+}
+
+.items-container {
+  position: relative;
+  @include full-width;
+}
+
+.masonry-item {
+  @include media('<=tablet') {
+    width: 100% !important;
+  }
+}
+
+ngx-masonry{
+  width: 100% !important;
+      margin: auto;
+}
+.search-item {
+  padding: 1rem;
 }
