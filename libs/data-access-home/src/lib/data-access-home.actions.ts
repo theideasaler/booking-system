@@ -5,6 +5,6 @@ const key = Features.home;
 export namespace DataAccessHomeAction {
   export class Search {
     public static readonly type = `[${key}] Search`;
-    constructor(public type: SearchTypes) {}
+    constructor(public type?: SearchTypes) {}
   }
 }

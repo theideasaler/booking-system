@@ -18,12 +18,14 @@ export class AppComponent {
   @ViewChild(NgxMasonryComponent) masonry!: NgxMasonryComponent;
   @Select(DataAccessHomeState.getData) data$!: Observable<any[]>;
   title = 'bsapp';
+  tabsContainerWidth = '30%';
   spacerWidth = '30%';
+  navColumn = '30%';
   searchItems: SearchItem[] = SearchTypes.toArray();
   options: Partial<TabsOptions> = { navIconColor: 'white' };
   masonryOptions: NgxMasonryOptions = {
     gutter: 20,
-    fitWidth: true
+    fitWidth: true,
   };
   constructor(private store: Store) {}
 
@@ -31,7 +33,7 @@ export class AppComponent {
     console.log('itemsloaded');
     this._refreshLayout();
   }
-  
+
   private _refreshLayout() {
     if (this.masonry !== undefined) {
       this.masonry.reloadItems();
@@ -44,11 +46,36 @@ export class AppComponent {
   }
 
   setSpacer($event: any) {
-    this.spacerWidth = `calc(${$event})`;
-    setTimeout(() => this._refreshLayout(), 300)
+    const { navFolded, contentFolded } = $event;
+    this.spacerWidth = `calc(${this.tabsContainerWidth} - ${
+      navFolded
+        ? `${
+            this._percentageToNumber(this.tabsContainerWidth) *
+              (this._percentageToNumber(this.navColumn) / 100) +
+            '%'
+          } + 24px + 3rem`
+        : `0px`
+    } - ${
+      contentFolded
+        ? `${
+            this._percentageToNumber(this.tabsContainerWidth) *
+              (1 - this._percentageToNumber(this.navColumn) / 100) +
+            '%'
+          } + 24px + 3rem`
+        : `0px`
+    })`;
+    setTimeout(() => this._refreshLayout(), 300);
   }
 
-  goToLink(url: string){
-    window.open(url, "_blank");
-}
+  goToLink(url: string) {
+    window.open(url, '_blank');
+  }
+
+  onScroll() {
+    this.store.dispatch(new DataAccessHomeAction.Search());
+  }
+
+  private _percentageToNumber(percentage: string) {
+    return +percentage.replace('%', '');
+  }
 }

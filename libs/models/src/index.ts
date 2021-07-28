@@ -30,15 +30,15 @@ export interface SearchItem {
 
 export interface TicketmasterResultModel {
   page: any;
-  _embedded: { [key: string]:any[]};
+  _embedded: { [key: string]: any[] };
   _links: any;
 }
 
 export interface TabsOptions {
-    navBgColor?: string;
-    navTabTextColor?: string;
-    navTabBgColor?: string;
-    navIconColor?: string;
-    navContentBgColor?: string;
-    navContentTextColor?: string;
+  navBgColor?: string;
+  navTabTextColor?: string;
+  navTabBgColor?: string;
+  navIconColor?: string;
+  navContentBgColor?: string;
+  navContentTextColor?: string;
 }

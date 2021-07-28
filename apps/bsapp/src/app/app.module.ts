@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgxsModule.forRoot([], {}),
+    NgxsModule.forRoot([], { developmentMode: false }),
     NgxsLoggerPluginModule.forRoot(),
     SharedUiModule,
     DataAccessHomeModule,

@@ -22,13 +22,14 @@ import { SideTabComponent } from './side-tab/side-tab.component';
 export class SideTabsComponent implements OnInit, AfterContentInit {
   @Input() fullHeight!: boolean;
   @Input() foldable!: boolean;
-  @Input() relativeWidth!: string;
+  @Input() tabsColumn!: string;
   @Input() options!: Partial<TabsOptions>;
   @Output() selectChange = new EventEmitter<SearchTypes>();
-  @Output() onFold = new EventEmitter<string>();
+  @Output() foldChange = new EventEmitter<{
+    navFolded: boolean;
+    contentFolded: boolean;
+  }>();
   @ContentChildren(SideTabComponent) tabs!: QueryList<SideTabComponent>;
-
-  private _screenWidth!: number;
   private iniialized!: boolean;
   private _noActiveTab!: boolean;
   set noActiveTab(v: boolean) {
@@ -42,14 +43,11 @@ export class SideTabsComponent implements OnInit, AfterContentInit {
     this._noActiveTab = !v;
     return this._noActiveTab;
   }
-  folded = false;
+  navFolded = false;
   contentFolded = false;
-  contentFoldedSm = false;
   constructor(private eleRef: ElementRef) {}
 
   ngOnInit(): void {
-    if (this.fullHeight)
-      this.eleRef.nativeElement.style.setProperty('--height', '100%');
     this.options = { ...(this.options ?? {}) };
     this._setOptions();
   }
@@ -64,100 +62,63 @@ export class SideTabsComponent implements OnInit, AfterContentInit {
     this.iniialized = true;
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this._screenWidth = event.target.innerWidth;
-  }
-
   activateTab(tab: SideTabComponent | undefined) {
     if (!tab) return;
     this.tabs.toArray().forEach((tab) => (tab.active = false));
     tab.active = true;
     this.selectChange.emit(tab.item?.value);
-    this.contentFoldedSm = false;
-    this.noActiveTab = false;
+    this.navFolded = false;
     this.contentFolded = false;
-    this.folded = false;
-    this._moveContent();
+    this.noActiveTab = false;
+    this._updateFoldStatus();
   }
 
   onTabsFoldChange() {
-    this.folded = !this.folded;
-    this._moveContent();
+    this.navFolded = !this.navFolded;
+    this._updateFoldStatus();
   }
 
   onContentFoldChange() {
     this.contentFolded = !this.contentFolded;
-    this._moveContent();
+    this._updateFoldStatus();
   }
 
   onCloseClick() {
     this.tabs.toArray().forEach((tab) => (tab.active = false));
-    this.contentFoldedSm = true;
     this.contentFolded = true;
-    this.folded = true;
-    this._moveContent();
+    this.navFolded = true;
+    this._updateFoldStatus();
   }
 
   private _setOptions() {
-    const {
-      navBgColor,
-      navTabTextColor,
-      navTabBgColor,
-      navIconColor,
-      navContentBgColor,
-      navContentTextColor,
-    } = this.options ?? {};
-    if (navBgColor)
-      this.eleRef.nativeElement.style.setProperty('--nav-bg-color', navBgColor);
-    if (navTabTextColor)
-      this.eleRef.nativeElement.style.setProperty(
-        '--nav-tab-text-color',
-        navTabTextColor
-      );
-    if (navTabBgColor)
-      this.eleRef.nativeElement.style.setProperty(
-        '--nav-tab-bg-color',
-        navTabBgColor
-      );
-    if (navIconColor)
-      this.eleRef.nativeElement.style.setProperty(
-        '--nav-icon-color',
-        navIconColor
-      );
-    if (navContentBgColor)
-      this.eleRef.nativeElement.style.setProperty(
-        '--nav-content-bg-color',
-        navContentBgColor
-      );
-    if (navContentTextColor)
-      this.eleRef.nativeElement.style.setProperty(
-        '--nav-content-text-color',
-        navContentTextColor
-      );
+    const options: any = this.options ?? {};
+
+    this.eleRef.nativeElement.style.setProperty(
+      '--height',
+      this.fullHeight ? '100%' : 'auto'
+    );
+    this.eleRef.nativeElement.style.setProperty(
+      '--tabs-column-width',
+      this.tabsColumn ?? '30%'
+    );
+    Object.keys(options ?? {}).forEach((key) => {
+      if (options[key])
+        this.eleRef.nativeElement.style.setProperty(
+          `--${this._camcelToHyphen(key)}`,
+          options[key]
+        );
+    });
   }
 
-  private _moveContent() {
+  private _updateFoldStatus() {
     if (!this.iniialized) return;
-    if (this.contentFolded) {
-      if (this.folded)
-        return this.onFold.emit(
-          `${Number(this.relativeWidth) * 100 + '%'} - ${
-            Number(this.relativeWidth) * 0.3 * 100 + '%'
-          } + 24px + 3rem - 21% + 24px + 3rem`
-        );
-      else
-        return this.onFold.emit(
-          `${Number(this.relativeWidth) * 100 + '%'} - 21% + 24px + 3rem`
-        );
-    } else {
-      if (this.folded)
-        return this.onFold.emit(
-          `${Number(this.relativeWidth) * 100 + '%'} - ${
-            Number(this.relativeWidth) * 0.3 * 100 + '%'
-          } + 24px + 3rem`
-        );
-      else return this.onFold.emit(`${Number(this.relativeWidth) * 100 + '%'}`);
-    }
+    this.foldChange.emit({
+      navFolded: this.navFolded,
+      contentFolded: this.contentFolded,
+    });
+  }
+
+  private _camcelToHyphen(str: string) {
+    return str.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
   }
 }

@@ -5,11 +5,12 @@
   display: flex;
   flex: 1;
   max-height: 100vh;
+  --nav-width: #{$nav-max-width};
 }
 
 .navs {
   z-index: 0;
-  width: $nav-max-width;
+  width: var(--nav-width);
   height: 100%;
   position: absolute;
   max-height: 100vh;
@@ -49,10 +50,16 @@
   }
 }
 
-ngx-masonry{
+ngx-masonry {
   width: 100% !important;
-      margin: auto;
+  margin: auto;
 }
 .search-item {
   padding: 1rem;
+}
+
+.mat-button.mat-primary,
+.mat-icon-button.mat-primary,
+.mat-stroked-button.mat-primary {
+  color: $nav-content-bg-color;
 }

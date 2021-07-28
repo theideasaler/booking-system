@@ -1,13 +1,13 @@
-<div class="container" [class.folded]="folded">
+<div class="container" [class.folded]="navFolded">
     <div class="tabs" [class.box-shadow]="contentFolded">
         <div *ngFor="let tab of tabs" class="tab" (click)="activateTab(tab)" [class.active]="tab.active">
             <span class="d-none-sm">{{tab.item.name}}</span>
             <mat-icon [matTooltip]="tab.item.name">{{tab.item.icon}}</mat-icon>
         </div>
     </div>
-    <div class="display-content"  [class.content-folded]="contentFolded" [class.content-folded-sm]="contentFoldedSm">
+    <div class="display-content" [class.content-folded]="contentFolded">
         <ng-content></ng-content>
-        <div *ngIf="foldable && folded" class="content-fold d-none-sm" [class.d-none]="noActiveTab">
+        <div *ngIf="foldable && navFolded" class="content-fold d-none-sm" [class.d-none]="noActiveTab">
             <mat-icon (click)="onContentFoldChange()">{{ !contentFolded ? 'chevron_left' : 'chevron_right'}}
             </mat-icon>
         </div>
@@ -17,6 +17,6 @@
     </div>
 </div>
 <div *ngIf="foldable && !contentFolded" class="tabs-fold d-none-sm">
-    <mat-icon (click)="onTabsFoldChange()">{{ !folded ? 'chevron_left' : 'chevron_right'}}
+    <mat-icon (click)="onTabsFoldChange()">{{ !navFolded ? 'chevron_left' : 'chevron_right'}}
     </mat-icon>
 </div>

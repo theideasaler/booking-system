@@ -8,6 +8,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { MatCardModule } from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatTooltipModule,
     NgxMasonryModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    InfiniteScrollModule
   ],
   declarations: [SideTabsComponent, AccordionComponent, SideTabComponent],
   exports: [
@@ -27,7 +29,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatTooltipModule,
     NgxMasonryModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    InfiniteScrollModule
   ],
 })
 export class SharedUiModule {}
