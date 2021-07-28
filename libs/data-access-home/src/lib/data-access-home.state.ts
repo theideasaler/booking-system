@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { State, Action, Selector, StateContext } from '@ngxs/store';
+import { append, iif, patch, removeItem } from '@ngxs/store/operators';
 import { DataAccessHomeAction } from './data-access-home.actions';
 import {
   Features,
@@ -10,7 +11,7 @@ import { DataAccessHomeService } from './data-access-home.service';
 import { tap } from 'rxjs/operators';
 
 const initials: DataAccessHomeStateModel = {
-  data: null,
+  data: [],
   type: SearchTypes.events,
   pageIndex: 0,
   pageSize: 100,
@@ -18,10 +19,11 @@ const initials: DataAccessHomeStateModel = {
   totalElements: 0,
   filters: null,
   _links: null,
+  stared: [],
 };
 
 export interface DataAccessHomeStateModel {
-  data: string[] | null;
+  data: any[];
   type: SearchTypes;
   pageIndex: number;
   pageSize: number;
@@ -29,6 +31,7 @@ export interface DataAccessHomeStateModel {
   totalElements: number;
   filters?: any;
   _links?: any;
+  stared: any[];
 }
 
 @State<DataAccessHomeStateModel>({
@@ -44,13 +47,22 @@ export class DataAccessHomeState {
     return state.data;
   }
 
+  @Selector()
+  public static getStared(state: DataAccessHomeStateModel) {
+    return state.stared;
+  }
+
   @Action(DataAccessHomeAction.Search)
   public add(
     ctx: StateContext<DataAccessHomeStateModel>,
     action: DataAccessHomeAction.Search
   ) {
     if (action.type && action.type !== ctx.getState().type) {
-      ctx.patchState({ ...initials, type: action.type });
+      ctx.patchState({
+        ...initials,
+        type: action.type,
+        stared: ctx.getState().stared,
+      });
     }
 
     const {
@@ -65,13 +77,32 @@ export class DataAccessHomeState {
     return this.api.getData(type, pageIndex, pageSize).pipe(
       tap((d: TicketmasterResultModel) => {
         const { page, _embedded, _links } = d;
-        ctx.patchState({
-          pageIndex: pageIndex + 1,
-          totalElements: page.totalElements,
-          totalPages: page.totalPages,
-          data: (data ?? []).concat(_embedded[type]),
-          _links,
-        });
+        ctx.setState(
+          patch({
+            pageIndex: pageIndex + 1,
+            totalElements: page.totalElements,
+            totalPages: page.totalPages,
+            data: append<any>(_embedded[type]),
+            _links,
+          })
+        );
+      })
+    );
+  }
+
+  @Action(DataAccessHomeAction.Star)
+  public star(
+    ctx: StateContext<DataAccessHomeStateModel>,
+    action: DataAccessHomeAction.Star
+  ) {
+    const { item } = action;
+    ctx.setState(
+      patch({
+        stared: iif<any[]>(
+          (is) => !is?.some((i) => i.id === item.id),
+          append([item]),
+          removeItem((i) => i.id === item.id)
+        ),
       })
     );
   }

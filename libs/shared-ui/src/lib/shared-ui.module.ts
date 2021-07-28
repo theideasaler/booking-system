@@ -9,6 +9,7 @@ import { NgxMasonryModule } from 'ngx-masonry';
 import { MatCardModule } from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FindInArrPipe } from './find-in-arr/find-in-arr.pipe';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatButtonModule,
     InfiniteScrollModule
   ],
-  declarations: [SideTabsComponent, AccordionComponent, SideTabComponent],
+  declarations: [SideTabsComponent, AccordionComponent, SideTabComponent, FindInArrPipe],
   exports: [
     SideTabsComponent,
     AccordionComponent,
@@ -30,7 +31,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     NgxMasonryModule,
     MatCardModule,
     MatButtonModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    FindInArrPipe
   ],
 })
 export class SharedUiModule {}

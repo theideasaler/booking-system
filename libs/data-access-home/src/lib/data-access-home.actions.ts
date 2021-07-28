@@ -7,4 +7,8 @@ export namespace DataAccessHomeAction {
     public static readonly type = `[${key}] Search`;
     constructor(public type?: SearchTypes) {}
   }
+  export class Star {
+    public static readonly type = `[${key}] Star`;
+    constructor(public item: any) {}
+  }
 }

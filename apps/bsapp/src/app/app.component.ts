@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   @ViewChild(NgxMasonryComponent) masonry!: NgxMasonryComponent;
   @Select(DataAccessHomeState.getData) data$!: Observable<any[]>;
+  @Select(DataAccessHomeState.getStared) stared$!: Observable<any[]>;
   title = 'bsapp';
   tabsContainerWidth = '30%';
   spacerWidth = '30%';
@@ -43,6 +44,10 @@ export class AppComponent {
 
   onSearch($event: SearchTypes) {
     this.store.dispatch(new DataAccessHomeAction.Search($event));
+  }
+
+  setStared(item: any) {
+    this.store.dispatch(new DataAccessHomeAction.Star(item));
   }
 
   setSpacer($event: any) {

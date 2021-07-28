@@ -8,8 +8,8 @@
   </bs-side-tabs>
 </div>
 <div class="nav-spacer" [style.width]="spacerWidth"></div>
-<div class="data-display" infinite-scroll (scrolled)="onScroll()" [infiniteScrollDistance]="2"
-  [infiniteScrollThrottle]="150" [infiniteScrollContainer]="'.data-display'" [fromRoot]="true">
+<div class="data-display" infinite-scroll (scrolled)="onScroll()" [infiniteScrollDistance]="2.5"
+  [infiniteScrollThrottle]="100" [infiniteScrollContainer]="'.data-display'" [fromRoot]="true">
   <div class="items-container" *ngIf="data$ | async as items">
     <ngx-masonry [ordered]="true" [updateLayout]="true" [options]="masonryOptions" (itemsLoaded)="itemsLoaded()">
       <div ngxMasonryItem class="masonry-item" *ngFor="let item of items;index as idx" style="width: 22.5%;">
@@ -19,6 +19,13 @@
               <mat-card-title>{{item.name}}</mat-card-title>
               <mat-card-subtitle>{{item.type === 'event' ? item.dates?.start?.localDate : item.type === 'venue' ?
                 item.address?.line1 : ''}}</mat-card-subtitle>
+              <ng-container *ngIf="{
+                  active: stared$ | async | findInArr:'id':item.id
+                } as iconStatus">
+                <mat-icon class="star" (click)="setStared(item)" [class.active]="iconStatus.active">{{ iconStatus.active
+                  ? 'star':
+                  'star_outline'}}</mat-icon>
+              </ng-container>
             </mat-card-header>
             <img *ngIf="item.images?.length" mat-card-image [src]="item.images[0]?.url"
               [alt]="item.accessibility?.info">
