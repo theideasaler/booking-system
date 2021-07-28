@@ -28,6 +28,7 @@ export class AppComponent {
     gutter: 20,
     fitWidth: true,
   };
+  starred = { name: 'Starred', value: SearchTypes.starred, icon: 'star'};
   constructor(private store: Store) {}
 
   itemsLoaded() {
@@ -43,6 +44,9 @@ export class AppComponent {
   }
 
   onSearch($event: SearchTypes) {
+    if($event === SearchTypes.starred)
+    this.store.dispatch(new DataAccessHomeAction.GetStarred());
+    else
     this.store.dispatch(new DataAccessHomeAction.Search($event));
   }
 

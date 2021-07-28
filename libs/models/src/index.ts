@@ -20,11 +20,12 @@ export enum SearchTypes {
   events = 'events',
   attractions = 'attractions',
   venues = 'venues',
+  starred = 'starred'
 }
 
 export interface SearchItem {
   name: string;
-  value: SearchTypes;
+  value?: SearchTypes;
   icon?: string;
 }
 

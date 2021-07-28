@@ -5,6 +5,10 @@
       <div class="tab-heading" tab-heading>{{item.name}}</div>
       <div tab-body>body description</div>
     </bs-side-tab>
+    <bs-side-tab [item]="starred">
+      <div class="tab-heading" tab-heading>Starred Items</div>
+      <div tab-body>body description</div>
+    </bs-side-tab>
   </bs-side-tabs>
 </div>
 <div class="nav-spacer" [style.width]="spacerWidth"></div>
