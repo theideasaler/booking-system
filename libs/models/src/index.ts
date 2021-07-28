@@ -5,13 +5,24 @@ export enum Features {
 export namespace SearchTypes {
   export function toArray() {
     return [
-      { name: 'Events', value: SearchTypes.events, icon: 'skateboarding' },
+      {
+        name: 'Events',
+        value: SearchTypes.events,
+        icon: 'skateboarding',
+        description: '',
+      },
       {
         name: 'Attractions',
         value: SearchTypes.attractions,
         icon: 'attractions',
+        description: '',
       },
-      { name: 'Venues', value: SearchTypes.venues, icon: 'map' },
+      {
+        name: 'Venues',
+        value: SearchTypes.venues,
+        icon: 'map',
+        description: '',
+      },
     ];
   }
 }
@@ -20,11 +31,12 @@ export enum SearchTypes {
   events = 'events',
   attractions = 'attractions',
   venues = 'venues',
-  starred = 'starred'
+  starred = 'starred',
 }
 
 export interface SearchItem {
   name: string;
+  description?: string;
   value?: SearchTypes;
   icon?: string;
 }

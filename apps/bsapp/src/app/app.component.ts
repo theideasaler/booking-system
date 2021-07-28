@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   @ViewChild(NgxMasonryComponent) masonry!: NgxMasonryComponent;
   @Select(DataAccessHomeState.getData) data$!: Observable<any[]>;
-  @Select(DataAccessHomeState.getStared) stared$!: Observable<any[]>;
+  @Select(DataAccessHomeState.getStarred) starred$!: Observable<any[]>;
   title = 'bsapp';
   tabsContainerWidth = '30%';
   spacerWidth = '30%';
@@ -28,7 +28,14 @@ export class AppComponent {
     gutter: 20,
     fitWidth: true,
   };
-  starred = { name: 'Starred', value: SearchTypes.starred, icon: 'star'};
+  starred = {
+    name: 'Starred',
+    value: SearchTypes.starred,
+    icon: 'star',
+    description: 'This section shows all starred items.',
+  };
+  defaultDescription =
+    'Lorem ipsum dolor sit amet, prima mentitum ad mel, et mazim epicuri duo. Dicunt delicatissimi mel ex. Ad usu ullum dolorum philosophia, vel nostrum perpetua te, an legimus menandri vix. Tota clita definitionem an vim. Natum erant iriure duo eu, ut suas verear ponderum mel, assentior philosophia ad eos. Ei meis nulla vituperatoribus vix. Has dolorum voluptaria ne, et facilisi singulis vulputate pro, at eam convenire consequat. Diam graeco no vis, magna atomorum sea te. Te eos minim alienum liberavisse. Id volutpat convenire qui. Populo omittantur efficiantur has ne, nibh adipisci explicari ea pri. An qui soleat appetere lucilius.';
   constructor(private store: Store) {}
 
   itemsLoaded() {
@@ -44,10 +51,9 @@ export class AppComponent {
   }
 
   onSearch($event: SearchTypes) {
-    if($event === SearchTypes.starred)
-    this.store.dispatch(new DataAccessHomeAction.GetStarred());
-    else
-    this.store.dispatch(new DataAccessHomeAction.Search($event));
+    if ($event === SearchTypes.starred)
+      this.store.dispatch(new DataAccessHomeAction.GetStarred());
+    else this.store.dispatch(new DataAccessHomeAction.Search($event));
   }
 
   setStared(item: any) {

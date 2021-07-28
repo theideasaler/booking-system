@@ -19,7 +19,7 @@ const initials: DataAccessHomeStateModel = {
   totalElements: 0,
   filters: null,
   _links: null,
-  stared: [],
+  starred: [],
 };
 
 export interface DataAccessHomeStateModel {
@@ -31,7 +31,7 @@ export interface DataAccessHomeStateModel {
   totalElements: number;
   filters?: any;
   _links?: any;
-  stared: any[];
+  starred: any[];
 }
 
 @State<DataAccessHomeStateModel>({
@@ -48,8 +48,8 @@ export class DataAccessHomeState {
   }
 
   @Selector()
-  public static getStared(state: DataAccessHomeStateModel) {
-    return state.stared;
+  public static getStarred(state: DataAccessHomeStateModel) {
+    return state.starred;
   }
 
   @Action(DataAccessHomeAction.Search)
@@ -61,7 +61,7 @@ export class DataAccessHomeState {
       ctx.patchState({
         ...initials,
         type: action.type,
-        stared: ctx.getState().stared,
+        starred: ctx.getState().starred,
       });
     }
 
@@ -98,11 +98,23 @@ export class DataAccessHomeState {
     const { item } = action;
     ctx.setState(
       patch({
-        stared: iif<any[]>(
+        starred: iif<any[]>(
           (is) => !is?.some((i) => i.id === item.id),
           append([item]),
           removeItem((i) => i.id === item.id)
         ),
+      })
+    );
+  }
+
+  @Action(DataAccessHomeAction.GetStarred)
+  public getStarred(ctx: StateContext<DataAccessHomeStateModel>) {
+    const { starred } = ctx.getState();
+    ctx.setState(
+      patch({
+        ...initials,
+        data: starred,
+        starred,
       })
     );
   }

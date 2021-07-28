@@ -3,11 +3,11 @@
     [tabsColumn]="navColumn" [options]="options">
     <bs-side-tab *ngFor="let item of searchItems; let i = index" [item]="item" [active]="i === 0">
       <div class="tab-heading" tab-heading>{{item.name}}</div>
-      <div tab-body>body description</div>
+      <div tab-body>{{item.description ? item.description : defaultDescription}}</div>
     </bs-side-tab>
     <bs-side-tab [item]="starred">
-      <div class="tab-heading" tab-heading>Starred Items</div>
-      <div tab-body>body description</div>
+      <div class="tab-heading" tab-heading>{{starred.name}}</div>
+      <div tab-body>{{starred.description}}</div>
     </bs-side-tab>
   </bs-side-tabs>
 </div>
@@ -15,7 +15,7 @@
 <div class="data-display" infinite-scroll (scrolled)="onScroll()" [infiniteScrollDistance]="2.5"
   [infiniteScrollThrottle]="100" [infiniteScrollContainer]="'.data-display'" [fromRoot]="true">
   <div class="items-container" *ngIf="data$ | async as items">
-    <ngx-masonry [ordered]="true" [updateLayout]="true" [options]="masonryOptions" (itemsLoaded)="itemsLoaded()">
+    <ngx-masonry *ngIf="items?.length; else noData" [ordered]="true" [updateLayout]="true" [options]="masonryOptions" (itemsLoaded)="itemsLoaded()">
       <div ngxMasonryItem class="masonry-item" *ngFor="let item of items;index as idx" style="width: 22.5%;">
         <div class="search-item">
           <mat-card>
@@ -24,7 +24,7 @@
               <mat-card-subtitle>{{item.type === 'event' ? item.dates?.start?.localDate : item.type === 'venue' ?
                 item.address?.line1 : ''}}</mat-card-subtitle>
               <ng-container *ngIf="{
-                  active: stared$ | async | findInArr:'id':item.id
+                  active: starred$ | async | findInArr:'id':item.id
                 } as iconStatus">
                 <mat-icon class="star" (click)="setStared(item)" [class.active]="iconStatus.active">{{ iconStatus.active
                   ? 'star':
@@ -46,5 +46,8 @@
         </div>
       </div>
     </ngx-masonry>
+    <ng-template #noData>
+      <span>Nothing to show</span>
+    </ng-template>
   </div>
 </div>
