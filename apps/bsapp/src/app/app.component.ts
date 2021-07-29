@@ -25,8 +25,11 @@ export class AppComponent {
   searchItems: SearchItem[] = SearchTypes.toArray();
   options: Partial<TabsOptions> = { navIconColor: 'white' };
   masonryOptions: NgxMasonryOptions = {
-    gutter: 20,
-    fitWidth: true,
+    gutter: '.gutter-sizer',
+    resize: true,
+    initLayout: true,
+    columnWidth: '.masonry-item',
+    percentPosition: true
   };
   starred = {
     name: 'Starred',

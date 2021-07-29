@@ -16,7 +16,8 @@
   [infiniteScrollThrottle]="100" [infiniteScrollContainer]="'.data-display'" [fromRoot]="true">
   <div class="items-container" *ngIf="data$ | async as items">
     <ngx-masonry *ngIf="items?.length; else noData" [ordered]="true" [updateLayout]="true" [options]="masonryOptions" (itemsLoaded)="itemsLoaded()">
-      <div ngxMasonryItem class="masonry-item" *ngFor="let item of items;index as idx" style="width: 22.5%;">
+      <div class="gutter-sizer"></div>
+      <div ngxMasonryItem class="masonry-item" *ngFor="let item of items;index as idx">
         <div class="search-item">
           <mat-card>
             <mat-card-header>
