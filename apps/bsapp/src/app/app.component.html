@@ -1,54 +1,65 @@
-<div class="navs">
+<div class="navs" [class.folded]="navFolded">
   <bs-side-tabs [fullHeight]="true" (selectChange)="onSearch($event)" [foldable]="true" (foldChange)="setSpacer($event)"
-    [tabsColumn]="navColumn" [options]="options">
-    <bs-side-tab *ngFor="let item of searchItems; let i = index" [item]="item" [active]="i === 0">
+    [tabsColumn]="navColumn" [options]="tabsOptions">
+    <bs-side-tab *ngFor="let item of searchItems; let i = index" [item]="item">
       <div class="tab-heading" tab-heading>{{item.name}}</div>
-      <div tab-body>{{item.description ? item.description : defaultDescription}}</div>
+      <div class="tab-body" tab-body>{{item.description ? item.description : defaultDescription}}</div>
     </bs-side-tab>
-    <bs-side-tab [item]="starred">
+    <bs-side-tab [item]="starred" [active]="true">
       <div class="tab-heading" tab-heading>{{starred.name}}</div>
       <div tab-body>{{starred.description}}</div>
     </bs-side-tab>
   </bs-side-tabs>
 </div>
 <div class="nav-spacer" [style.width]="spacerWidth"></div>
-<div class="data-display" infinite-scroll (scrolled)="onScroll()" [infiniteScrollDistance]="2.5"
-  [infiniteScrollThrottle]="100" [infiniteScrollContainer]="'.data-display'" [fromRoot]="true">
-  <div class="items-container" *ngIf="data$ | async as items">
-    <ngx-masonry *ngIf="items?.length; else noData" [ordered]="true" [updateLayout]="true" [options]="masonryOptions" (itemsLoaded)="itemsLoaded()">
-      <div class="gutter-sizer"></div>
-      <div ngxMasonryItem class="masonry-item" *ngFor="let item of items;index as idx">
-        <div class="search-item">
-          <mat-card>
-            <mat-card-header>
-              <mat-card-title>{{item.name}}</mat-card-title>
-              <mat-card-subtitle>{{item.type === 'event' ? item.dates?.start?.localDate : item.type === 'venue' ?
-                item.address?.line1 : ''}}</mat-card-subtitle>
-              <ng-container *ngIf="{
-                  active: starred$ | async | findInArr:'id':item.id
-                } as iconStatus">
-                <mat-icon class="star" (click)="setStared(item)" [class.active]="iconStatus.active">{{ iconStatus.active
-                  ? 'star':
-                  'star_outline'}}</mat-icon>
-              </ng-container>
-            </mat-card-header>
-            <img *ngIf="item.images?.length" mat-card-image [src]="item.images[0]?.url"
-              [alt]="item.accessibility?.info">
-            <mat-card-content>
-              <p>
-                {{item.type === 'event' ? item.info ?? item.pleaseNote : item.type === 'venue' ? item.parkingDetail : ''
-                }}
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-button color="primary" (click)="goToLink(item.url)">VIEW MORE</button>
-            </mat-card-actions>
-          </mat-card>
+<ng-container *ngIf="{ type: type$ | async} as display">
+  <div class="data-display" infinite-scroll (scrolled)="onScroll()" [infiniteScrollDistance]="2.5"
+    [infiniteScrollThrottle]="100" [infiniteScrollContainer]="'.data-display'" [fromRoot]="true">
+    <bs-accordion *ngIf="display.type === searchTypes.starred" (selectChange)="filterStarred($event)" [options]="accordionOptions">
+      <bs-accordion-panel *ngFor="let item of searchItems; let i = index" [item]="item" [active]="i === 0">
+        <div class="panel-heading" panel-heading>{{item.name}}</div>
+        <div class="panel-body" panel-body>{{item.description ? item.description : defaultDescription}}</div>
+      </bs-accordion-panel>
+    </bs-accordion>
+    <div class="items-container" *ngIf="data$ | async as items">
+      <ngx-masonry *ngIf="items?.length; else noData" [ordered]="true" [updateLayout]="true" [options]="masonryOptions"
+        (itemsLoaded)="itemsLoaded()">
+        <div class="gutter-sizer"></div>
+        <div ngxMasonryItem class="masonry-item" *ngFor="let item of items;index as idx">
+          <div class="search-item">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>{{item.name}}</mat-card-title>
+                <mat-card-subtitle>{{item.type === 'event' ? item.dates?.start?.localDate : item.type === 'venue' ?
+                  item.address?.line1 : ''}}</mat-card-subtitle>
+                <ng-container *ngIf="{
+                    active: starred$ | async | findInArr:'id':item.id
+                  } as iconStatus">
+                  <mat-icon class="star" (click)="setStared(item)" [class.active]="iconStatus.active">{{
+                    iconStatus.active
+                    ? 'star':
+                    'star_outline'}}</mat-icon>
+                </ng-container>
+              </mat-card-header>
+              <img *ngIf="item.images?.length" mat-card-image [src]="item.images[0]?.url"
+                [alt]="item.accessibility?.info">
+              <mat-card-content>
+                <p>
+                  {{item.type === 'event' ? item.info ?? item.pleaseNote : item.type === 'venue' ? item.parkingDetail :
+                  ''
+                  }}
+                </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button color="primary" (click)="goToLink(item.url)">VIEW MORE</button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
         </div>
-      </div>
-    </ngx-masonry>
-    <ng-template #noData>
-      <span>Nothing to show</span>
-    </ng-template>
+      </ngx-masonry>
+      <ng-template #noData>
+        <span>Nothing to show...</span>
+      </ng-template>
+    </div>
   </div>
-</div>
+</ng-container>

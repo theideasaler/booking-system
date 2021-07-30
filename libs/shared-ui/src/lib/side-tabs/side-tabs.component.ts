@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { SearchTypes, TabsOptions } from '@booking-system/models';
 import { SideTabComponent } from './side-tab/side-tab.component';
+import { camcelToHyphen } from '@booking-system/utils';
 
 @Component({
   selector: 'bs-side-tabs',
@@ -57,7 +58,7 @@ export class SideTabsComponent implements OnInit, AfterContentInit {
       this.tabs
         .toArray()
         .filter((t) => !!t)
-        .find((tab) => (tab.active = true))
+        .find((tab) => tab.active === true)
     );
     this.iniialized = true;
   }
@@ -104,7 +105,7 @@ export class SideTabsComponent implements OnInit, AfterContentInit {
     Object.keys(options ?? {}).forEach((key) => {
       if (options[key])
         this.eleRef.nativeElement.style.setProperty(
-          `--${this._camcelToHyphen(key)}`,
+          `--${camcelToHyphen(key)}`,
           options[key]
         );
     });
@@ -116,9 +117,5 @@ export class SideTabsComponent implements OnInit, AfterContentInit {
       navFolded: this.navFolded,
       contentFolded: this.contentFolded,
     });
-  }
-
-  private _camcelToHyphen(str: string) {
-    return str.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
   }
 }

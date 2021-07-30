@@ -24,13 +24,17 @@ body {
   @include flex-center-column;
 }
 
+.d-flex {
+  display: flex;
+}
+
 .d-none {
     display: none;
 }
 
 .d-none-sm {
     @include media("<phone") {
-        display: none;
+        display: none !important;
     }
 }
 

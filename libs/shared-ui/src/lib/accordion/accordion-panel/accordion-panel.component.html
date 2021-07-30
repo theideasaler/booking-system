@@ -1,0 +1,12 @@
+<div class="panel-title-sm" (click)="activatePanel()">
+    <span>{{item.name}}</span>
+    <mat-icon [matTooltip]="item.name" class="flex-row">{{item.icon}}</mat-icon>
+</div>
+<div class="panel-container" [class.hidden]="!active">
+    <div class="panel-heading">
+        <ng-content select="[panel-heading]"></ng-content>
+    </div>
+    <div class="panel-body">
+        <ng-content select="[panel-body]"></ng-content>
+    </div>
+</div>

@@ -1,1 +1,13 @@
-<p>accordion works!</p>
+<div class="container">
+    <div class="panels d-flex d-none-sm" *ngIf="!smallScreen">
+        <ng-container *ngFor="let panel of panels">
+            <div class="panel" (click)="activatePanel(panel)" [class.active]="panel.active">
+                <span>{{panel.item.name}}</span>
+                <mat-icon [matTooltip]="panel.item.name" class="flex-row">{{panel.item.icon}}</mat-icon>
+            </div>
+        </ng-container>
+    </div>
+    <div class="panel-content">
+        <ng-content></ng-content>
+    </div>
+</div>

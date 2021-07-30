@@ -7,9 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { MatCardModule } from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FindInArrPipe } from './find-in-arr/find-in-arr.pipe';
+import { AccordionPanelComponent } from './accordion/accordion-panel/accordion-panel.component';
 
 @NgModule({
   imports: [
@@ -19,9 +20,15 @@ import { FindInArrPipe } from './find-in-arr/find-in-arr.pipe';
     NgxMasonryModule,
     MatCardModule,
     MatButtonModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
   ],
-  declarations: [SideTabsComponent, AccordionComponent, SideTabComponent, FindInArrPipe],
+  declarations: [
+    SideTabsComponent,
+    AccordionComponent,
+    SideTabComponent,
+    FindInArrPipe,
+    AccordionPanelComponent,
+  ],
   exports: [
     SideTabsComponent,
     AccordionComponent,
@@ -32,7 +39,8 @@ import { FindInArrPipe } from './find-in-arr/find-in-arr.pipe';
     MatCardModule,
     MatButtonModule,
     InfiniteScrollModule,
-    FindInArrPipe
+    FindInArrPipe,
+    AccordionPanelComponent,
   ],
 })
 export class SharedUiModule {}

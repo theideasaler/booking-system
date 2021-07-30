@@ -14,6 +14,6 @@ export namespace DataAccessHomeAction {
 
   export class GetStarred {
     public static readonly type = `[${key}] Get Starred`;
-    constructor() {}
+    constructor(public type?: SearchTypes) {}
   }
 }

@@ -1,0 +1,78 @@
+@import 'index';
+
+.panel-container {
+  padding: 2rem;
+}
+
+.panel-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.panel-title-sm {
+  display: none;
+}
+
+@include media('>=phone') {
+  .hidden {
+    display: none;
+  }
+}
+
+@include media('<phone') {
+  :host {
+    margin-bottom: 0.2rem;
+  }
+  .panel-title-sm {
+    display: block;
+
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--panel-tab-bg-color);
+    color: var(--panel-tab-text-color);
+    transition: $global-transition-time;
+    border-radius: 0;
+
+    &:not(:last-child) {
+      margin-right: 0;
+      //   margin-bottom: 0.2rem;
+    }
+    @include hover-cursor-pointer;
+    @include hover-colors(
+      var(--panel-content-bg-color),
+      var(--panel-tab-text-color)
+    );
+    mat-icon {
+      color: var(--panel-icon-color);
+    }
+
+    span {
+      padding: 0 1rem;
+    }
+  }
+
+
+
+  .panel-container {
+    margin-bottom: 0.2rem;
+    transition: $global-transition-time;
+    padding: 0;
+    height: fit-content;
+    .panel-heading {
+        margin-bottom: 0;
+    }
+    .panel-heading, .panel-body {
+        padding: 2rem;
+    }
+    &.hidden {
+        transition: $global-transition-time;
+      margin-bottom: 0.2rem;
+      padding: 0;
+      height: 0;
+      overflow-y: hidden;
+    }
+  }
+}

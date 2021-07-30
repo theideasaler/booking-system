@@ -14,6 +14,10 @@
   height: 100%;
   position: absolute;
   max-height: 100vh;
+  transition: $global-transition-time;
+  &.folded {
+    z-index: 0;
+  }
   @include media('<phone') {
     position: absolute;
     width: 100%;
@@ -103,4 +107,8 @@ mat-icon.star {
   .masonry-item {
     width: 100%;
   }
+}
+
+.mat-card-header .mat-card-title {
+  font-size: 1.5rem;
 }

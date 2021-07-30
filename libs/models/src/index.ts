@@ -55,3 +55,11 @@ export interface TabsOptions {
   navContentBgColor?: string;
   navContentTextColor?: string;
 }
+export interface AccordionOptions {
+  panelBgColor?: string;
+  panelTabTextColor?: string;
+  panelTabBgColor?: string;
+  panelIconColor?: string;
+  panelContentBgColor?: string;
+  panelContentTextColor?: string;
+}
